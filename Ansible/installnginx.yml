@@ -1,0 +1,18 @@
+- name: FOr installing , configuring and deploying web page in ngnix web server
+  hosts: all
+  become: yes
+  vars:
+          - greeting_msg: Hello DevOps
+          - provisioner_tool: Docker
+          - automation: Ansible
+  tasks:
+          - name: Install nginx web server
+            apt: name=nginx state=latest update_cache=yes
+          - name: Configure root folder
+            copy: src=default dest=/etc/nginx/sites-available/default
+          - name: Restart
+            command: service nginx restart
+          - name: Create the web root folder
+            file: path=/var/html state=directory mode=0777
+          - name: Deploy
+            template: src=index.html.j2 dest=/var/html/index.html

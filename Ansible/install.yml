@@ -1,0 +1,37 @@
+- name: To install vim and tree
+  hosts: all
+  vars:
+          - greeting_msg: DevOps
+          - automation: Ansilbe
+          - provisioner: Docker
+  tasks:
+          - name: Install nginx web server
+            apt: name=nginx state=latest update_cache=yes
+            when: (ansible_distribution == "Ubuntu" and ansible_os_family == "Debian")
+
+          - name: Install epel in CentOS
+            when: (ansible_distribution == "CentOS" and ansible_os_family == "RedHat")
+            yum: name=epel-release state=latest
+
+          - name: Install nginx in CentOS
+            yum: name=nginx state=latest
+            when: (ansible_distribution == "CentOS" and ansible_os_family == "RedHat")
+
+          - name: Configure nginx
+            copy: src=default dest=/etc/nginx/sites-available/default
+            when: (ansible_distribution == "Ubuntu" and ansible_os_family == "Debian")
+
+          - name: Configure nginx for CentOS
+            copy: src=default.conf dest=/etc/nginx/conf.d/default.conf
+            when: (ansible_distribution == "CentOS" and ansible_os_family == "RedHat")
+
+          - name: For web root folder
+            file: path=/var/html state=directory 
+            when: (ansible_distribution == "CentOS" and ansible_os_family == "RedHat")
+
+          - name: Restart
+            command: service nginx restart
+          
+          - name: Deploy
+            template: src=index.html.j2 dest=/var/html/index.html
+            

@@ -1,0 +1,10 @@
+- name: Calling my module
+  hosts: localhost
+  tasks:
+          - name: Invoke custom module
+            hello: Name="Easwaran"
+            register: output
+
+          - debug: var=output
+
+             

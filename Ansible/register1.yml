@@ -1,0 +1,13 @@
+- name: For register variable and try catch
+  hosts: all
+  tasks:
+          - name: This is a block
+            block:
+                    - name: List the dictionary
+                      shell: ls -l
+                      register: output
+            rescue:
+                    - name: Print the error
+                      debug: msg="*****FAIL******"
+            always:
+                    - debug: msg="Printing always"

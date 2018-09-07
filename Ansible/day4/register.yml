@@ -1,0 +1,9 @@
+- name: This for register variable
+  hosts: all
+  tasks:
+          - name: run shell command
+            shell: ls -l
+            register: result
+
+          - name: Print the result
+            debug: var=result

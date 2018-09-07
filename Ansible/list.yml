@@ -1,0 +1,17 @@
+- name: Demo for user of list variable and its navigation as a loop
+  hosts: localhost
+  vars:
+     - software_tools:
+                  - tree
+                  - vim
+                  - default-jdk
+                  - maven
+
+  tasks:
+      - name: Print the list
+        debug: msg="{{item}}"
+        with_list: "{{software_tools}}"
+      - name: run the commands from list
+        command: tree
+        #command: "{{item}}"
+        #with_list: "{{software_tools}}"

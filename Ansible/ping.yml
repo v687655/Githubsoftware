@@ -1,0 +1,6 @@
+- name: Demo play
+  hosts: all
+  tasks:
+          - name: Ping the docker container
+            ping:
+

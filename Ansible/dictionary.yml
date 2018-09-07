@@ -1,0 +1,15 @@
+- name: Demo for use of dictionary and looping
+  hosts: localhost
+  vars:
+          - contacts:
+                  eash:
+                          name: Easwaran
+                          mobile: 93430493909
+                  peeks:
+                          name: Priyanka
+                          mobile: 93430342111
+
+  tasks:
+          - name: Print the mobile number
+            debug: msg="Mobile number of {{item.value.name}} is {{item.value.mobile}}"
+            with_dict: "{{contacts}}"
